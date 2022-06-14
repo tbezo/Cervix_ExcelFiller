@@ -370,6 +370,8 @@ namespace VMS.TPS
                         if (fraction == null) { throw new Exception("No data in fraction"); }
                         string columnName = fraction.ColumnName;
 
+                        bool nan_error = false;
+
                         // Insert cell data into the worksheet.
                         foreach (Dictionary<string, Dictionary<string, double>> StructureData in fraction.Structures.Values)
                         {
@@ -388,10 +390,21 @@ namespace VMS.TPS
                                     cell.CellFormula.Remove();
                                 }
 
-                                // write new cell values
-                                cell.CellValue = new CellValue(DataCells["value"].ToString("##.000", CultureInfo.InvariantCulture));
-                                cell.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                // write new cell values if not NaN
+                                if (!Double.IsNaN(DataCells["value"]))
+                                {
+                                    cell.CellValue = new CellValue(DataCells["value"].ToString("##.000", CultureInfo.InvariantCulture));
+                                    cell.DataType = new EnumValue<CellValues>(CellValues.Number);
+                                }
+                                else
+                                {
+                                    nan_error = true;
+                                }
                             }
+                        }
+                        if (nan_error)
+                        {
+                            MessageBox.Show("Not all cell values were valid! Please check for consistency");
                         }
                     }
 
