@@ -14,8 +14,8 @@ using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.2")]
-[assembly: AssemblyFileVersion("1.0.0.2")]
+[assembly: AssemblyVersion("1.0.0.3")]
+[assembly: AssemblyFileVersion("1.0.0.3")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
 // TODO: Uncomment the following line if the script requires write access.
@@ -227,7 +227,7 @@ namespace VMS.TPS
         /// <returns></returns>
         private static FractionData ExtractFractionData(BrachyPlanSetup ps)
         {
-            FractionData fraction;
+            FractionData fraction = new FractionData(ps.Id);
             string strIndex = ps.Id.Last().ToString();
             int index = Convert.ToInt32(strIndex);
 
@@ -236,10 +236,10 @@ namespace VMS.TPS
                 MessageBox.Show("Ignoring plan id " + ps.Id.ToString() + " ,\nindex out of excel data cell range", SCRIPT_NAME);
                 return null;
             }
-            else
-            {
-                fraction = new FractionData(ps.Id);
-            }
+            //else
+            //{
+            //    fraction = new FractionData(ps.Id);
+            //}
 
             StructureSet ss = ps.StructureSet;
 
@@ -313,8 +313,15 @@ namespace VMS.TPS
                 double ttime = ps.Catheters.Sum(x => x.GetTotalDwellTime());
                 fraction.Structures["TRAK"]["Sum"]["value"] = (ttime * 4.07 / 3600);
 
-                fraction.Structures["TRAK"]["Ring"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.Equals("Ring")).GetTotalDwellTime() / ttime;
-                fraction.Structures["TRAK"]["Tandem"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.Equals("Tandem")).GetTotalDwellTime() / ttime;
+                if (ps.Catheters.Any<Catheter>(x => x.Id.Equals("Tandem")))
+                {
+                    fraction.Structures["TRAK"]["Tandem"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.Equals("Tandem")).GetTotalDwellTime() / ttime;
+                }
+                // Ring not present if using Aarhus Template
+                if (ps.Catheters.Any<Catheter>(x => x.Id.Equals("Ring")))
+                {
+                    fraction.Structures["TRAK"]["Ring"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.Equals("Ring")).GetTotalDwellTime() / ttime;
+                }
 
                 double needleSum = 0.0;
                 foreach (Catheter cat in cats.Where<Catheter>(x => !(new int[] { 1, 3 }.Contains(x.ChannelNumber))))
@@ -402,7 +409,7 @@ namespace VMS.TPS
                                 }
                             }
                         }
-                        if (nan_error)
+                                                if (nan_error)
                         {
                             MessageBox.Show("Not all cell values were valid! Please check for consistency");
                         }
