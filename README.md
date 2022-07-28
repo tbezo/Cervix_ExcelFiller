@@ -7,6 +7,6 @@ A template file is copied from the path provided in the "templateFile" variable 
 current year as subfolder).
 
 To use the Plugin with the original Excel Sheet provided by GEC ESTRO (https://www.estro.org/ESTRO/media/ESTRO/About/hdr-gyn_biol-physik-formular_2017.xlsx)
-you have to customize the row entries in the FractionData Class first. Also the regular expressions inside the ExtractFractionData() function have to be adjusted to match your clinc's naming convention.
+you have to customize the row entries in the FractionData Class first. Also the regular expressions inside the ExtractFractionData() function have to be adjusted to match your clinic's naming convention.
 
 Open XML SDK can be installed via nuget. The ESAPI reference might have to get corrected.
