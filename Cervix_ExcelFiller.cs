@@ -14,8 +14,8 @@ using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.3")]
-[assembly: AssemblyFileVersion("1.0.0.3")]
+[assembly: AssemblyVersion("1.0.0.4")]
+[assembly: AssemblyFileVersion("1.0.0.4")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
 // TODO: Uncomment the following line if the script requires write access.
@@ -313,14 +313,14 @@ namespace VMS.TPS
                 double ttime = ps.Catheters.Sum(x => x.GetTotalDwellTime());
                 fraction.Structures["TRAK"]["Sum"]["value"] = (ttime * 4.07 / 3600);
 
-                if (ps.Catheters.Any<Catheter>(x => x.Id.Equals("Tandem")))
+                if (ps.Catheters.Any<Catheter>(x => x.Id.StartsWith("Tandem")))
                 {
-                    fraction.Structures["TRAK"]["Tandem"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.Equals("Tandem")).GetTotalDwellTime() / ttime;
+                    fraction.Structures["TRAK"]["Tandem"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.StartsWith("Tandem")).GetTotalDwellTime() / ttime;
                 }
                 // Ring not present if using Aarhus Template
-                if (ps.Catheters.Any<Catheter>(x => x.Id.Equals("Ring")))
+                if (ps.Catheters.Any<Catheter>(x => x.Id.StartsWith("Ring")))
                 {
-                    fraction.Structures["TRAK"]["Ring"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.Equals("Ring")).GetTotalDwellTime() / ttime;
+                    fraction.Structures["TRAK"]["Ring"]["value"] = ps.Catheters.First<Catheter>(x => x.Id.StartsWith("Ring")).GetTotalDwellTime() / ttime;
                 }
 
                 double needleSum = 0.0;
@@ -409,7 +409,7 @@ namespace VMS.TPS
                                 }
                             }
                         }
-                                                if (nan_error)
+                        if (nan_error)
                         {
                             MessageBox.Show("Not all cell values were valid! Please check for consistency");
                         }
