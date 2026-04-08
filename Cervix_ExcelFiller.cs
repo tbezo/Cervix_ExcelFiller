@@ -257,7 +257,7 @@ namespace VMS.TPS
                 fraction.Structures["CTV"]["D90%"]["value"] = ps.GetDoseAtVolume(CTV, 90.0, VolumePresentation.Relative, DoseValuePresentation.Absolute).Dose;
                 fraction.Structures["CTV"]["D50%"]["value"] = ps.GetDoseAtVolume(CTV, 50.0, VolumePresentation.Relative, DoseValuePresentation.Absolute).Dose;
             }
-            Structure Rektum = ss.Structures.FirstOrDefault(x => Regex.IsMatch(x.Id, @"^OAR.*rektum", RegexOptions.IgnoreCase));
+            Structure Rektum = ss.Structures.FirstOrDefault(x => Regex.IsMatch(x.Id, @"^OAR.*re[ck]tum", RegexOptions.IgnoreCase));
             if (Rektum != null)
             {
                 fraction.Structures["Rectum"]["Vol"]["value"] = Rektum.Volume;
