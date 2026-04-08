@@ -14,8 +14,8 @@ using VMS.TPS.Common.Model.API;
 using VMS.TPS.Common.Model.Types;
 
 // TODO: Replace the following version attributes by creating AssemblyInfo.cs. You can do this in the properties of the Visual Studio project.
-[assembly: AssemblyVersion("1.0.0.4")]
-[assembly: AssemblyFileVersion("1.0.0.4")]
+[assembly: AssemblyVersion("1.0.0.5")]
+[assembly: AssemblyFileVersion("1.0.0.5")]
 [assembly: AssemblyInformationalVersion("1.0")]
 
 // TODO: Uncomment the following line if the script requires write access.
@@ -528,9 +528,9 @@ namespace VMS.TPS
             },
             ["Bowel"] = new Dictionary<string, Dictionary<string, double>>()
             {
-                ["Vol"] = new Dictionary<string, double>() { ["row"] = 63, ["value"] = 0.0 },
-                ["D0.1cc"] = new Dictionary<string, double>() { ["row"] = 64, ["value"] = 0.0 },
-                ["D2.0cc"] = new Dictionary<string, double>() { ["row"] = 66, ["value"] = 0.0 },
+                ["Vol"] = new Dictionary<string, double>() { ["row"] = 82, ["value"] = 0.0 },
+                ["D0.1cc"] = new Dictionary<string, double>() { ["row"] = 83, ["value"] = 0.0 },
+                ["D2.0cc"] = new Dictionary<string, double>() { ["row"] = 85, ["value"] = 0.0 },
             },
         };
     }
